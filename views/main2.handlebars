@@ -1,0 +1,454 @@
+<div class="row">
+<div class="column">
+
+<!-- INTRO -->
+<div class="section" id="intro-div">
+<h1>
+	<a href="https://plasmodb.org/plasmo/app/record/gene/{{data.GeneID}}" target="_blank">
+		{{data.GeneID}}</a>
+	{{abbrcheck data.GeneSymbol}}
+</h1>
+<p><b>Genome location: </b>{{{data.GenomicLocationElement}}}</p>
+<p><b>Genome classification: </b>{{{data.UpdatedGenomeClassification}}}</p>
+</div>
+
+<!-- FUNCTION -->
+<div class="section" id="function-div">
+<h2>Function and Localization</h2>
+<p><b>Product Description: </b>{{data.ProductDescription}}</p>
+<p>
+	<b><a href="https://services.healthtech.dtu.dk/services/SignalP-6.0/" target=_blank>SignalP</a> Peptide: </b>
+	{{data.SignalPPeptide}}
+</p>
+<p><b># Transmembrane Domains: </b><em>{{data.NumTMDomains}}</em></p>
+<p><b>EC Numbers: </b>{{{data.ECNumbersFormatted}}}</p>
+<p><b>Curated GO (PlasmoDB):</b>
+{{#if data.GOTableData}}
+</p>
+<div class="table-wrapper">
+	<div class="table-scroll"{{{data.GOTableHeight}}}>
+		<table>
+			<tbody>
+				<th>Type</th>
+				<th>GO Term</th>
+				<th>Name</th>
+				{{#each data.GOTableData}}
+					<tr>
+						{{#each this}}
+							<td>{{{this}}}</td>
+						{{/each}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+{{else}}
+<i>None</i></p>
+{{/if}}
+<p><b>Expression by stage (LR - <a href="https://www.science.org/doi/10.1126/science.1087025?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed" target=_blank>Le Roch et al.</a>, and MCA - <a href="https://www.malariacellatlas.org/atlas/plasmodium-falciparum-atlas/" target=_blank>Malaria Cell Atlas</a>):</b>
+<div class="table-wrapper">
+	<table>
+		<tbody style="text-align:center;">
+				<th>Stage</th>
+				<th>LR class</th>
+				<th>MCA mean</th>
+				<th>MCA prop. zeros</th>
+				<tr>
+					<td><b>Sporozoite</b></td>
+					<td>{{{textnodata data.LeRochSporozoiteExpressionClass}}}</td>
+					<td><span style="color:gray;">N/A</span></td>
+					<td><span style="color:gray;">N/A</span></td>
+				</tr>
+				<tr>
+					<td><b>Ring</b></td>
+					<td>{{{textnodata data.LeRochRingExpressionClass}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasRingMeanExpression}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasRingExpressionProportionZero}}}</td>
+				</tr>
+				<tr>
+					<td><b>Trophozoite</b></td>
+					<td>{{{textnodata data.LeRochTrophozoiteExpressionClass}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasTrophozoiteMeanExpression}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasTrophozoiteExpressionProportionZero}}}</td>
+				</tr>
+				<tr>
+					<td><b>Schizont</b></td>
+					<td>{{{textnodata data.LeRochSchizontExpressionClass}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasSchizontMeanExpression}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasSchizontExpressionProportionZero}}}</td>
+				</tr>
+				<tr>
+					<td><b>Gametocyte</b></td>
+					<td>{{{textnodata data.LeRochGametocyteExpressionClass}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasGametocyteMeanExpression}}}</td>
+					<td>{{{roundnodata data.MalariaCellAtlasGametocyteExpressionProportionZero}}}</td>
+				</tr>
+		</tbody>
+	</table>
+</div>
+
+<p><b>More info</b>:</p>
+<ul>
+	<li><a href="https://mpmp.huji.ac.il/pfid?pfid={{data.GeneID}}" target=_blank>Malaria Parasite Metabolic Pathways (MPMP) Link</a></li>
+	<li><a href="http://bigg.ucsd.edu/models/iAM_Pf480/genes/{{data.GeneID}}" target=_blank>BiGG Metabolic Model Link</a></li>
+	<li><a href="{{data.STRINGlink}}" target=_blank>STRING Interaction Network Link</a></li>
+</ul>
+</div>
+
+
+<!-- RESISTOME -->
+<div class="section" id="resistome-div">
+<h2>Resistome Mutations</h2>
+{{#if data.ResistomePf3D7v3GeneID}}
+<p><b>Old (Pf3D7v3) Gene ID: </b>{{data.ResistomePf3D7v3GeneID}}</p>
+<p><b>Resistome Missense Mutations: </b>{{{data.FormattedMissenseMutations}}}</p>
+<p><b>Resistome Compounds with Missense Mutations: </b>{{{data.FormattedResistomeCompounds}}}</p>
+<p>
+	<b>Resistome # Samples with Disruptive Mutations: </b>
+	<em style="color:{{data.ResistomeNumSampleswithDisruptiveMutationsColor}}">{{data.ResistomeNumSampleswithDisruptiveMutations}}</em> (<em style="color:{{data.ResistomeNumSampleswithMissenseMutationsColor}}">{{data.ResistomeNumSampleswithMissenseMutations}}</em> missense, <em style="color:{{data.ResistomeNumSampleswithInterestingMissenseMutationsColor}}">{{data.ResistomeNumSampleswithInterestingMissenseMutations}}</em> "interesting" missense)
+</p>
+{{else}}
+<p><i>No corresponding Pf3D7v3 gene ID in resistome database</i><p>
+{{/if}}
+</div>
+
+</div>
+<div class="column">
+
+<!-- ESSENTIALITY -->
+<div class="section" id="ess-div">
+<h2>Essentiality (ABS)</h2>
+<p>
+	<b><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6360947/" target=_blank>Zhang</a> Phenotype: </b>
+	{{#if data.ZhangPhenotype}}
+	<em class="light" style="color:{{data.ZhangPhenotypeColor}}">{{data.ZhangPhenotype}}</em>{{#if data.ZhangNote}} *<i>{{data.ZhangNote}}</i>{{/if}}
+	{{else}}N/A{{/if}}
+</p>
+{{#if data.HasZhang}}
+<p>MIS: <em style="color:{{data.ZhangMISColor}}">{{data.ZhangOriginalMIS}}</em> | MFS: <em style="color:{{data.ZhangMFSColor}}">{{data.ZhangOriginalMFS}}</em> | #Insertions: <em style="color:{{data.ZhangNumInsertionsinCDSColor}}">{{data.ZhangNumInsertionsinCDS}}</em></p>
+{{/if}}
+
+<p>
+	<b><a href="https://plasmogem.umu.se/pbgem/phenotype" target=_blank>PlasmoGEM</a> Phenotype: </b>
+	{{#if data.PlasmoGEMPhenotype}}
+	<em class="light" style="color:{{data.PlasmoGEMPhenotypeColor}}">{{data.PlasmoGEMPhenotype}}</em> (Pb ortholog: <b>{{data.PlasmoGEMPbOrtholog}}</b>)
+	{{else}}N/A{{/if}}
+</p>
+
+{{#if data.PlasmoGEMPhenotype}}
+<ul>
+	<li><b>Relative Growth Rate: </b><em style="color:{{data.PlasmoGEMRelativeGrowthRateColor}}">{{data.PlasmoGEMRelativeGrowthRate}}</em></li>
+	<li><b>Confidence: </b>{{round data.PlasmoGEMConfidence}}</li>
+</ul>
+{{/if}}
+
+{{#if data.RMgmDBPhenotype}}
+<p>
+	<b><a href="https://www.pberghei.eu/index.php" target=_blank>RMgmDB</a> ABS Phenotype: </b>
+	<em class="light" style="color:{{data.RMgmDBPhenotypeColor}}">{{data.RMgmDBPhenotype}}</em> (Pb ortholog: {{data.RMgmDBPbOrtholog}})
+</p>
+<p>Modification: <i>{{data.RMgmDBGeneModification}}</i> | <a href="{{data.RMgmDBLink}}" target=_blank>{{data.RMgmDBID}}</a></p>
+{{else}}
+<p><b><a href="https://www.pberghei.eu/index.php" target=_blank>RMgmDB</a> ABS Phenotype: </b>N/A</p>
+{{/if}}
+<p><b>More info</b>: <a href="https://phenoplasm.org/singlegene.php?gene={{data.GeneID}}" target=_blank>PhenoPlasm Link</a><p>
+</div>
+
+<!-- BINDING -->
+<div class="section" id="binding-div">
+<h2>Binding Evidence</h2>
+<p>
+	<b>AlphaFill Uniprot ID: </b>
+	{{#if data.AlphaFillPfUniprot}}
+	<a href="https://alphafill.eu/model?id=AF-{{data.AlphaFillPfUniprot}}-F1-model_v4" target="_blank">
+	{{/if}}
+	{{check data.AlphaFillPfUniprot}}</a>
+</p>
+<p>
+	<b>"Best" AlphaFill ligand hit: </b>
+	{{{data.AlphaFillSummary}}}
+</p>
+{{#if data.ECTableData}}
+<p><b><a href="https://www.brenda-enzymes.org/index.php" target=_blank>BRENDA</a> EC Inhibitors: </b></p>
+<div class="table-wrapper">
+	<div class="table-scroll"{{{data.ECTableHeight}}}>
+		<table>
+			<tbody>
+				<th>EC #</th>
+				<th>Name</th>
+				<th>EC Inhibitors</th>
+				{{#each data.ECTableData}}
+					<tr>
+						{{#each this}}
+							<td>{{{this}}}</td>
+						{{/each}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+{{else}}
+<i>No associated EC numbers</i>
+{{/if}}
+
+{{#if data.HasBindingDBOrtholog}}
+<p><b>Orthology to <a href="https://www.bindingdb.org/" target=_blank>BindingDB</a> Entries:</b></p>
+<div class="table-wrapper">
+	<div class="table-scroll"{{{data.BindingDBTableHeight}}} style="height:200px">
+		<table>
+			<tbody>
+				<th>UniProt</th>
+				<th>Protein Name</th>
+				<th>Species</th>
+				<th>Homology Source</th>
+				<th>BindingDB Ligands</th>
+				{{#each data.BindingDBTableData}}
+					<tr>
+						{{#each this}}
+							<td>{{{this}}}</td>
+						{{/each}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+{{else}}
+<p><i>No evidence of orthology to BindingDB entries</i></p>
+{{/if}}
+</div>
+
+<!-- ORTHOLOGS -->
+<div class="section" id="ortho-div">
+<h2>Orthology Information</h2>
+<p>
+	<b>Ortholog Group (OrthoMCL): </b>
+	<a href="https://orthomcl.org/orthomcl/app/record/group/{{data.OrthologGroup}}" target="_blank">
+		{{data.OrthologGroup}}
+	</a>
+</p>
+
+{{#if data.HasHumanOrtholog}}
+<p>
+	<b>Most Similar Human Ortholog: </b>
+	<a href="https://www.uniprot.org/uniprotkb/{{data.HsMostSimilarUniprotID}}/entry" target="_blank">
+		{{data.HsMostSimilarUniprotID}}
+	</a>
+</p>
+<p>TM-align score: <em style="color:{{data.HsTMalignScoreColor}}">{{round data.HsTMalignScore}}</em> | RMSD: <em style="color:{{data.HsTMalignRMSDColor}}">{{data.HsTMalignRMSD}}</em></p>
+<p>Seq Identity: <em style="color:{{data.HsTMalignSeqIdentityColor}}">{{data.HsTMalignSeqIdentity}}</em> | Length: <em>{{data.HsTMalignLength}} / {{data.ProteinLength}}</em></p>
+<p><b>All Human Orthologs (OrthoMCL):</b></p>
+<div class="table-wrapper">
+	<div class="table-scroll"{{{data.HsGeneTableHeight}}}>
+		<table>
+			<tbody>
+				<th>Gene ID</th>
+				<th>Description</th>
+				{{#each data.HsGeneTable}}
+					<tr>
+						{{#each this}}
+							<td>{{this}}</td>
+						{{/each}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+{{else}}
+<p><i>No human ortholog(s)</i></p>
+{{/if}}
+</div>
+
+{{#if data.HasBindingDBOrtholog}}{{else}}
+<!-- GENETIC VARIATION -->
+<div class="section" id="variation-div">
+<h2>Genetic Variation</h2>
+<p><b><a href="https://www.malariagen.net/apps/pf7/samples" target=_blank>MalariaGEN Pf7</a> (worldwide samples) # unique SNV/indels: </b>
+{{#if data.Pf7TableHomoData}}
+<p><i>Homozygous genotype calls only</i></p>
+<div class="table-wrapper">
+	<table>
+		<tbody>
+				<tr>
+					<th>variant type</th>
+					<th>common</th>
+					<th>rare</th>
+					<th>doubleton</th>
+					<th>singleton</th>
+				</tr>
+			{{#each data.Pf7TableHomoData}}
+				<tr>
+					{{#each this}}
+						<td>{{this}}</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>
+{{/if}}
+{{#if data.Pf7TableAnyData}}
+<p><i>Any inclusion in genotype call</i></p>
+<div class="table-wrapper">
+	<table>
+		<tbody>
+				<tr>
+					<th>variant type</th>
+					<th>common</th>
+					<th>rare</th>
+					<th>doubleton</th>
+					<th>singleton</th>
+				</tr>
+			{{#each data.Pf7TableAnyData}}
+				<tr>
+					{{#each this}}
+						<td>{{this}}</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>
+{{else}}
+<p><i>No passing variants found</i></p>
+{{/if}}
+
+<p><b>PlasmoDB Total SNPs: </b>
+<em style="color:{{data.PlasmoDBTotalSNPsColor}}">{{data.PlasmoDBTotalSNPs}}</em></p>
+<p>Non-coding: <em style="color:{{data.PlasmoDBNoncodingSNPsColor}}">{{{data.PlasmoDBNoncodingSNPs}}}</em> | Synonymous: <em style="color:{{data.PlasmoDBSynonymousSNPsColor}}">{{{data.PlasmoDBSynonymousSNPs}}}</em> | Nonsynonymous: <em style="color:{{data.PlasmoDBNonsynonymousSNPsColor}}">{{{data.PlasmoDBNonsynonymousSNPs}}}</em> | Stop Codon: <em style="color:{{data.PlasmoDBStopCodonSNPsColor}}">{{{data.PlasmoDBStopCodonSNPs}}}</em></p>
+</div>
+{{/if}}
+
+</div>
+
+<div class="column">
+
+<!-- PROTEIN -->
+
+{{#if data.AlphaFillPfUniprot}}
+<iframe src="https://www.ncbi.nlm.nih.gov/Structure/icn3d/?mmdbafid={{data.AlphaFillPfUniprot}}&width=730&height=300&showcommand=0&mobilemenu=1&showtitle=1" width="600" height="320" style="border:none"></iframe>
+{{/if}}
+
+<div class="section" id="protein-div">
+<h2>Protein Information</h2>
+<p>
+	<b>Protein Length: </b><em style="color:{{data.ProteinLengthColor}}">{{data.ProteinLength}}</em> | <b>Molecular Weight (kDa): </b><em style="color:{{data.MolecularWeightColor}}">{{divide1000 data.MolecularWeight}}</em>
+</p>
+<p><b>UniProt ID(s): </b>{{{data.UniprotIDLinks}}}</p>
+<p><b>PDB ID(s): </b>{{{data.PDBIDLinks}}}</p>
+<p><b>Isoelectric Point: </b><em style="color:{{data.IsoelectricPointColor}}">{{data.IsoelectricPoint}}</em></p>
+
+<p><b>Protein Domain Annotations:</b></p>
+<div class="table-wrapper">
+	<div class="table-scroll" style="max-height:200px">
+		<table>
+			<tbody>
+				<th>Source</th>
+				<th>Family ID</th>
+				<th>Description</th>
+				{{#each data.ProteinDomainData}}
+					<tr>
+						{{#each this}}
+							<td>{{this}}</td>
+						{{/each}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+
+<!-- GENETIC VARIATION -->
+{{#if data.HasBindingDBOrtholog}}
+<div class="section" id="variation-div">
+<h2>Genetic Variation</h2>
+<p><b><a href="https://www.malariagen.net/apps/pf7/samples" target=_blank>MalariaGEN Pf7</a> (worldwide samples) # unique SNV/indels: </b>
+{{#if data.Pf7TableHomoData}}
+<p><i>Homozygous genotype calls only</i></p>
+<div class="table-wrapper">
+	<table>
+		<tbody>
+				<tr>
+					<th>variant type</th>
+					<th>common</th>
+					<th>rare</th>
+					<th>doubleton</th>
+					<th>singleton</th>
+				</tr>
+			{{#each data.Pf7TableHomoData}}
+				<tr>
+					{{#each this}}
+						<td>{{this}}</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>
+{{/if}}
+{{#if data.Pf7TableAnyData}}
+<p><i>Any inclusion in genotype call</i></p>
+<div class="table-wrapper">
+	<table>
+		<tbody>
+				<tr>
+					<th>variant type</th>
+					<th>common</th>
+					<th>rare</th>
+					<th>doubleton</th>
+					<th>singleton</th>
+				</tr>
+			{{#each data.Pf7TableAnyData}}
+				<tr>
+					{{#each this}}
+						<td>{{this}}</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>
+{{else}}
+<p><i>No passing variants found</i></p>
+{{/if}}
+
+<p><b>PlasmoDB Total SNPs: </b>
+<em style="color:{{data.PlasmoDBTotalSNPsColor}}">{{data.PlasmoDBTotalSNPs}}</em></p>
+<p>Non-coding: <em style="color:{{data.PlasmoDBNoncodingSNPsColor}}">{{{data.PlasmoDBNoncodingSNPs}}}</em> | Synonymous: <em style="color:{{data.PlasmoDBSynonymousSNPsColor}}">{{{data.PlasmoDBSynonymousSNPs}}}</em> | Nonsynonymous: <em style="color:{{data.PlasmoDBNonsynonymousSNPsColor}}">{{{data.PlasmoDBNonsynonymousSNPs}}}</em> | Stop Codon: <em style="color:{{data.PlasmoDBStopCodonSNPsColor}}">{{{data.PlasmoDBStopCodonSNPs}}}</em></p>
+</div>
+{{/if}}
+
+</div>
+</div>
+
+<!-- PUBLICATIONS -->
+<div class="section" id="pub-div" style="border:none">
+<h2>Associated Publications</h2>
+{{#if data.pmidTableData}}
+<div class="table-wrapper">
+	<table>
+		<tbody>
+			<tr>
+				<th>PMID</th>
+				<th>Title</th>
+				<th>Authors</th>
+				<th>DOI</th>
+			</tr>
+			{{#each data.pmidTableData}}
+				<tr>
+					{{#each this}}
+						<td>{{{this}}}</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>
+{{else}}
+<p><i>No associated publications</i></p>
+{{/if}}
+</div>

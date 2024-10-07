@@ -1,0 +1,176 @@
+<h1>Pf Target Browser</h1>
+<p>This web app, created by the <b><a href="https://winzeler.ucsd.edu/" target=_blank>Winzeler Lab</a></b>, was designed to be a resource for <b><a href="https://www.malariada.org/" target=_blank>MalDA (Malaria Drug Accelerator) Consortium</a></b>'s <i>Plasmodium falciparum</i> target prioritization efforts. We have compiled a variety of annotations for all genes in the <i>P. falciparum</i> 3D7 genome (PlasmoDB release 66) relevant to their potential as antimalarial targets.</p>
+<p>To navigate this app, you can:</p>
+<ul>
+	<li>Enter a keyword into the search bar, which will show matches to protein-coding genes based on Pf3D7 gene ID, gene symbol, and product description. If there is exactly one match, it will redirect to the corresponding gene page (e.g. <a href="./search?q=cytb" target=_blank>cytb</a>)</li>
+	<li>Enter the Pf3D7 ID of the gene of interest (e.g. <a href="./PF3D7_0417200" target=_blank>PF3D7_0417200</a>) at the end of the URL</li>
+	<li>Visit the <b><a href="./genelist" target=_blank>Gene List</a></b> tab for a full list of protein-coding genes</li>
+</ul>
+
+<h2>Methods</h2>
+
+<h3><i>P. falciparum</i> 3D7 Genes</h3>
+<p>5,318 protein coding genes (5,389 transcripts) were considered from the <i>Plasmodium falciparum</i> 3D7 reference genome in <a href="https://plasmodb.org/plasmo/app/" target=_blank>PlasmoDB Release 66 - 28 Nov 2023</a> (accessed January 3rd, 2024).</p>
+
+<h3>PlasmoDB Annotations</h3>
+<p>The following gene/transcript annotations were taken directly from PlasmoDB Release 66 using the "Search Strategy" function:</p>
+<ul>
+	<li>Gene/transcript ID, Entrez ID, UniProt ID(s), gene symbol, product description, ortholog group (OrthoMCL)</li>
+	<li>Genomic location, gene/CDS/protein length, molecular weight, isoelectric point</li>
+	<li>Domain annotations (Interpro, PFam, Superfamily), # transmembrane (TM) domains, <a href="https://services.healthtech.dtu.dk/services/SignalP-6.0/" target=_blank>SignalP</a> peptide prediction [<a href="#teufel">ref</a>]</li>
+	<li>Computed and curated Gene Ontology (GO) components, functions and processes; Enzyme Commission (EC) numbers</li>
+	<li>Genetic variation across all strains in PlasmoDB (number of unique noncoding, synonymous, nonsynonymous, and nonsense SNPs)</li>
+</ul>
+<p>Pf Target Browser includes linkouts to <a href="https://www.brenda-enzymes.org/index.php" target=_blank>BRENDA</a> for EC numbers and <a href="https://amigo.geneontology.org/amigo" target=_blank>AmiGO</a> for GO terms.</p>
+
+<h3>Functional Information</h3>
+<p>To provide additional data on biological function, we include the following:</p>
+<ul>
+	<li>
+		Summary of gene expression across sporozoite, ring, trophozoite, schizont and gametocyte stages based on the <b>Le Roch et al.</b> oligonucleotide array dataset [<a href="#leroch">ref</a>] <b>Malaria Cell Atlas</b> Chromium 10x single cell RNA-seq dataset [<a href="#howick">ref</a>]. RNA-seq expression data was taken directly from <b>pf-ch10x-exp.csv</b> in <b><a href="https://www.malariacellatlas.org/downloads/pf.zip">pf.zip</a></b> downloaded from the <a href="https://www.malariacellatlas.org/atlas/plasmodium-falciparum-atlas" target=_blank>Malaria Cell Atlas website</a> in February 2024.
+		<ul>
+			<li>For the Le Roch et al. microarray dataset, which reports expression and logP (likelihood of gene absence calculated using the MOID algorithm) values for 9 substages synchronized using two different methods (sorbitol or thermocycling), genes were labelled "expressed" in a particular stage if at least one substage with either synchronization method had expression ≥ 30 and logP ≤ -1, "not expressed" if no substage had expression ≥ 10 and logP ≤ -0.5, and otherwise "possibly expressed."</li>
+			<li>For the Malaria Cell Atlas scRNA-seq dataset, mean normalized expression across cells and proportion of cells with expression value of 0 for the gene are reported. There are a total of 37,624 cells with the following distribution of cells per stage:</li>
+			<ul>
+				<li>Ring - 7,071 | Trophozoite - 13,436 | Schizont - 8,159 | Gametocyte - 8,958</li>
+			</ul>
+		</ul>
+	</li>
+	<li>Link to gene ID search in the <b>Malaria Parasite Metabolic Pathways</b> website, which includes a variety of information on function and sub-cellular localization of genes included in its metabolic pathway maps. MPMP is maintained by Hagai Ginsburg from Hebrew University.</li>
+	<li>Link to possible entry in <b>iAM_Pf480</b>, a genome-scale metabolic model (GeMM) with 480 <i>Pf</i> genes constructed by Abdel-Haleem et al. 2018 [<a href="#abdel-haleem">ref</a>], in <b>BiGG Models</b>.</li>
+	<li>Link to gene ID search in the <b>STRING</b> website, which displays networks of known and predicted protein-protein interactions from the STRING database [<a href="#szklarczyk">ref</a>].</li>
+</ul>
+
+<h3>Essentiality Information</h3>
+<p>Three sources of evidence were used to assess <i>Pf</i> gene essentiality:</p>
+<ol>
+	<li>
+		<b>Zhang et al. 2018</b> [<a href="#zhang-piggybac">ref</a>]: used <i>piggyBac</i> transposon insertion mutagenesis to generate 38,000 <i>Pf</i> mutants; calculated mutagenesis index scores (MIS) and mutagenesis fitness scores (MFS) for 5,399 nuclear genes, identifying 2,680 genes as essential for in vitro ABS growth. <a href="https://www.science.org/doi/suppl/10.1126/science.aap7847/suppl_file/aap7847_zhang_sm_table-s5.xlsx" target=_blank>TABLE S5</a>
+		<ul>
+			<li>Pf3D7 gene IDs were directly mapped to the PlasmoDB release 66 gene list</li>
+		</ul>
+	</li>
+	<li>
+		<b>PlasmoGEM</b> (<i>Plasmodium</i> Genetic Modification Project) [<a href="#schwach">ref</a>]: produced <i>P. berghei</i> gene disruption vectors with enhanced transfection efficiency; website includes blood stage phenotypic data (relative growth rate) for 2,578 <i>Pb</i> genes. <a href="https://plasmogem.umu.se/pbgem/phenotype" target=_blank>PlasmoGEM link</a>
+		<ul>
+			<li>PbANKA gene IDs were mapped to Pf3D7 gene IDs based on OrthoMCL (release 6.19) ortholog groups</li>
+			<li>"Download CSV" accessed January 2024</li>
+		</ul>
+	</li>
+	<li>
+		<b>RMgmDB</b> (Rodent Malaria genetically modified Parasites database) [<a href="#khan">ref</a>]: manually curated web repository of genotype and phenotype information for 5,300+ <i>P. berghei</i> mutants (as of August 12, 2023 update) <a href="https://www.pberghei.eu/index.php" target=_blank>RMgmDB link</a>
+		<ul>
+			<li>Searched database using all Pf3D7 gene IDs (RMgmDB stores its own PbANKA-Pf3D7 mapping); considered "successful" gene modifications of any type with reported asexual blood stage phenotype</li>
+			<li>Accessed January 2024</li>
+		</ul>
+	</li>
+</ol>
+
+<h3>Binding Information</h3>
+<p>We also defined presence of a small molecule binding domain as a key factor for target potential. To approximate this, we searched for evidence of similarity to proteins with known ligand interactions through three complementary approaches:</p>
+<ol>
+	<li>
+		Orthology of Pf3D7 protein to at least one protein in <b>BindingDB</b> [<a href="#gilson">ref</a>], a public database of experimentally determined protein-ligand binding affinities (1,218,340 compounds and 9,195 targets as of 2024-01-28 update). <a href="https://www.bindingdb.org/rwd/bind/chemsearch/marvin/Download.jsp" target=_blank>BindingDB link</a>
+		<ul>
+			<li>Accessed January 30th, 2024 with help from Mike Gilson</li>
+			<li>6,202 proteins with measured affinity of ≥10 micromolar with at least one compound considered</li>
+			<li>Orthology determined based on presence of <i>P. falciparum</i> 3D7 gene in the same ortholog group as BindingDB Uniprot entry, according to four different orthology databases (HOGENOM, OMA, OrthoDB available in the Uniprot ID mapping web tool [accessed 2/2/2024] and OrthoMCL)</li>
+			<li>Additionally, we ran BLAST on the protein sequence of each BindingDB entry against the full OrthoMCL protein database (FASTA release OrthoMCL-6.19). Protein sequences for all Uniprot BindingDB identifiers were obtained from UniProt’s REST tool and were compared against the OrthoMCL custom database with BLAST 2.15 blastp function. <i>Pf</i> genes were mapped based on ortholog group match.</li>
+		</ul>
+	</li>
+	<li>
+		<b>AlphaFill</b> [<a href="#hekkelman">ref</a>] predictions of ligands corresponding to Pf3D7 AlphaFold(v4) models, taken from the AlphaFill databank. The AlphaFill algorithm determines candidate ligands by searching for sequence homologs in PDB with known ligands. Of 5,099 Pf3D7 genes having a corresponding Uniprot ID with AlphaFill information, 2,771 had at least one ligand hit. <a href="https://alphafill.eu/" target=_blank>AlphaFill link</a>
+	</li>
+		<ul>
+			<li>To focus on AlphaFill hits that are more likely to indicate druggability, we excluded small ligands with <10 atoms as well as additional salts, solvents and polymers used for protein crystallization.</li>
+			<li>We only show confident hits with global r.m.s.d. <10 (a measure of structural between the Pf protein of interest and its potential homolog in PDB) and local r.m.s.d. <4 (structural similarity of the backbone atoms within 6 Å from the transplanted ligand, after local structural alignment).</li>
+			<li>The "best" AlphaFill hit for each gene was defined as the confident hit with the lowest local RMSD among all ligands, considering the lowest local RMSD hit if multiple exist for a single ligand.</li>
+		</ul>
+	<li>
+		Inhibitors linked to EC (Enzyme Commission) number classes in the <b>BRENDA Enzyme Database</b> [<a href="#chang">ref</a>] (Release 2023.1, updated 2/1/2023) for Pf3D7 genes based on EC number annotations in PlasmoDB release 66, applicable only to enzymes. Other ligand types were not considered. For genes with incomplete EC number annotations, all EC numbers matching the wildcard were considered. <a href="https://www.brenda-enzymes.org/" target=_blank>BRENDA link</a>
+	</li>
+</ol>
+
+<h3>Human Orthologs</h3>
+<p>Existence of a highly similar human ortholog poses cytotoxicity concerns for a candidate target. <i>Homo sapiens</i> genes orthologous to Pf3D7 genes were determined from OrthoMCL, and both sequence and structural similarity were evaluated through pairwise comparison of Pf3D7 and human ortholog AlphaFold(v4) structures in <b>TM-align</b> [<a href="#zhang-TM-align">ref</a>]. Of 2,006 genes with human ortholog(s), 1,972 had AlphaFold structures enabling TM-align comparison.</p>
+
+<h3>Resistome Mutations</h3>
+<p>In vitro selections with antimalarial compounds yield mutations that may play roles in resistance. We have compiled a <i>Pf</i> "resistome" database consisting of all SNV and indel mutations identified from whole genome sequencing of 1,138 <i>Pf</i> clones or bulk culture samples with evolved resistance to one of 146 diverse compounds. Here, we report data on the following classes of mutations in the resistome database:</p>
+<ul>
+	<li><b>"Disruptive" mutations:</b> any SNV or indel occurring within a gene that is not a synonymous, intron, or stop retained variant (e.g. inframe indels, frameshift, start lost, splice region, nonsense, missense)</li>
+	<li><b>Missense mutations:</b> missense SNVs</li>
+	<li><b>"Interesting" missense mutations:</b> missense SNVs that do not fall in a low complexity region (PlasmoDB) and have pLDDT >70 for the affected residue where the protein's AlphaFold structure is available. These are highlighted in <b style="color:green">green</b> in Pf Target Browser</li>
+</ul>
+<p>To determine variants, WGS reads were aligned to the Pf3D7 v13 genome and processed according to GATK 3.5 pipeline. GATK HaplotypeCaller with default parameters was used to generate SNV/indel variant calls, and SnpEff was used to annotate genes and variant effects. Initial filtering retained SNVs and indels with total depth ≥2 and alternate allele frequency (AAF) >0.2 in a resistant sample along with depth ≥3 and genotype call of 0/0 in its parent sample. Next, these variants were filtered for SnpEff gene annotation (excludes intergenic variants >1000nt away from nearest gene) and either major alt allele depth >40 and major AAF >0.4, or major alt allele depth >10 and AAF >0.8.</p>
+
+<h3>Protein Information</h3>
+<p>All records from <b>Protein Data Bank</b> (PDB) associated with a <i>Pf</i> gene ID were downloaded in February 2024. <b style="color:red">NOTE: PDB ID(s) are based on exact gene ID match. To thoroughly check whether a protein has a crystal structure in PDB, search PDB using other keywords.</b></p>
+<p>We include visualization of the AlphaFold protein structure, if available, in an embedded version of <b><a href="https://www.ncbi.nlm.nih.gov/Structure/icn3d" target=_blank>iCn3D</a></b>, a web-based 3D structure viewer from the NIH.</p>
+
+<h3>Field Variants</h3>
+<p>We used the MalariaGEN Pf7 [<a href="#pf7">ref</a>] dataset of 20,864 worldwide samples to assess field genetic variation. Variant (SNV and indel) call data was accessed via the <b>malariagen_data</b> Python package. We restricted our analysis to 5,868,659 variants marked as "passing" based on quality filters and exclusion of variants in hypervariable regions, mitochondrial and apicoplast genomes (see Methods of the Pf7 paper). <b style="color:red">Note: this means that no variants are reported for subtelomeric and non-nuclear genes, even though they may have field variants.</b> Variants were then sorted based on effect ("<b>synonymous</b>" includes stop retained, "<b>disruptive</b>" was defined as anything other than synonymous, and "<b>missense</b>" is restricted to missense SNVs) and prevalence among all Pf7 samples ("<b>singleton</b>" occurs in only one sample, "<b>doubleton</b>" occurs in two samples, "<b>rare</b>" variants exclude singletons/doubletons but occur in less than 21 samples (<0.1% prevalence), all else defined as "<b>common</b>"). Whether a variant occurs in a sample or not was further stratified by homozygous genotype call, e.g. 1/1 indicating that allele 1 is present at nearly 100% frequency, or any genotype call containing the allele (e.g. 1/2 would be counted as both allele 1 and allele 2 occurring in a sample).</p>
+<p>TL;DR: Each number in the table indicates how many unique variants (non-3D7 reference allele at a locus within the gene) of a particular effect type fall into a certain prevalence bin across the Pf7 dataset. In computing prevalence, whether or not a sample "has" a variant is defined either by homozygous only or any genotype call.</p>
+
+<h3>Associated Publications</h3>
+<p>A download from the NCBI FTP site was performed for gene2pubmed.gz (version 2024-02-21) containing tax ID, gene ID (Entrez) and PubMed ID. Gene IDs were mapped to this annotation set and corresponding PMIDs were extracted. To include gene references not related to an Entrez ID, but to the gene name (symbol), PMID details were obtained pragmatically using NCBI Eutils4 efetch function from NCBI. Title, authors and DOI identifier were retrived for each record.</p>
+
+<h2>More Resources</h2>
+<ul>
+	<li>Essentiality and localization for "conserved protein, unknown function" genes on Pf3D7 chromosome 3: <a href="https://ars.els-cdn.com/content/image/1-s2.0-S2405471222004690-mmc2.xlsx" target=_blank>TABLE</a> (Kimmel et al. 2023 [<a href="#kimmel">ref</a>])</li>
+	<li>Structural similarities to known domains found in 353 Pf3D7 proteins of unknown function, using Alphafold predictions and DALI search against PDB: <a href="https://www.biorxiv.org/content/10.1101/2023.06.05.543710v2.supplementary-material" target=_blank>TABLES</a> (Behrens and Spielmann 2024 [<a href="#behrens">ref</a>])</li>
+</ul>
+
+<h2>Number Formatting</h2>
+<p>To facilitate interpretation, certain numeric data are colored to reflect their value. Colors should not be construed as indications of whether a gene is suitable or not as an antimalarial drug target. Details are listed below.</p>
+<ul>
+	<li>Essentiality - Zhang MIS: linear scale from green to red, green being 0, red being 1</li>
+	<li>Essentiality - Zhang MFS: green if MFS is negative, else red</li>
+	<li>Essentiality - Zhang #Insertions: green if #Insertions = 0, yellow if #Insertions = 1, else red</li>
+	<li>Essentiality - PlasmoGEM Relative Growth Rate: linear scale from green to red, green being 0, red being 1</li>
+	<li>Binding Evidence - AlphaFill "best hit" Local RMSD: uncolored (white) if <1, yellow if 1-4, red if >4</li>
+	<li>Binding Evidence - AlphaFill "best hit" Global RMSD: linear scale from green to red based on percent rank among all Pf3D7 genes' best AlphaFill hits</li>
+	<li>Resistome Mutations - # Samples with Disruptive Mutations: linear scale from red to green based on percent rank among all Pf3D7 genes</li>
+	<li>Genetic Variaton - PlasmoDB Total / Non-coding / Synonymous / Stop Codon SNPs: linear scale from green to red based on percent rank among all Pf3D7 genes</li>
+	<li>Orthology Information - Most Similar Human Ortholog TM-align score: linear scale from green to red based on percent rank among all Pf3D7 genes with a human ortholog</li>
+	<li>Orthology Information - Most Similar Human Ortholog RMSD: linear scale from red to green based on percent rank among all Pf3D7 genes with a human ortholog</li>
+	<li>Orthology Information - Most Similar Human Ortholog Seq Identity: linear scale from green to red based on percent rank among all Pf3D7 genes with a human ortholog</li>
+	<li>Protein Information - Protein Length: linear scale from red to green based on percent rank among all Pf3D7 genes</li>
+	<li>Protein Information - Molecular Weight: linear scale from red to green based on percent rank among all Pf3D7 genes</li>
+	<li>Protein Information - Isoelectric Point: linear scale from red to green based on percent rank among all Pf3D7 genes</li>
+</ul>
+
+<h2>References</h2>
+<ol>
+	<li id="abdel-haleem">Abdel-Haleem, A. M., Hefzi, H., Mineta, K., Gao, X., Gojobori, T., Palsson, B. O., Lewis, N. E., & Jamshidi, N. (2018). Functional interrogation of Plasmodium genus metabolism identifies species- and stage-specific differences in nutrient essentiality and drug targeting. <i>PLoS computational biology</i>, <b>14</b>(1), e1005895. <a href="https://doi.org/10.1371/journal.pcbi.1005895" target=_blank>https://doi.org/10.1371/journal.pcbi.1005895</a></li>
+	
+	<li id="behrens">Behrens, H. & Spielmann, T. Identification of domains in Plasmodium falciparum proteins of unknown function using DALI search on Alphafold predictions. bioRxiv 2023.06.05.543710; doi: <a href="https://doi.org/10.1101/2023.06.05.543710" target=_blank>https://doi.org/10.1101/2023.06.05.543710</a> [Preprint]</li>
+	
+	<li id="chang">Chang, A., Jeske, L., Ulbrich, S., Hofmann, J., Koblitz, J., Schomburg, I., Neumann-Schaal, M., Jahn, D., & Schomburg, D. (2021). BRENDA, the ELIXIR core data resource in 2021: new developments and updates. <i>Nucleic acids research</i>, <b>49</b>(D1), D498–D508. <a href="https://doi.org/10.1093/nar/gkaa1025" target=_blank>https://doi.org/10.1093/nar/gkaa1025</a></li>
+	
+	<li id="gilson">Gilson, M. K., Liu, T., Baitaluk, M., Nicola, G., Hwang, L., & Chong, J. (2016). BindingDB in 2015: A public database for medicinal chemistry, computational chemistry and systems pharmacology. <i>Nucleic acids research</i>, <b>44</b>(D1), D1045–D1053. <a href="https://doi.org/10.1093/nar/gkv1072" target=_blank>https://doi.org/10.1093/nar/gkv1072</a></li>
+	
+	<li id="hekkelman">Hekkelman, M.L., de Vries, I., Joosten, R.P. et al. (2023). AlphaFill: enriching AlphaFold models with ligands and cofactors. <i>Nat Methods</i> <b>20</b>, 205–213. <a href="https://doi.org/10.1038/s41592-022-01685-y" target=_blank>https://doi.org/10.1038/s41592-022-01685-y</a></li>
+	
+	<li id="howick">Howick, V. M. et al. (2019). The Malaria Cell Atlas: Single parasite transcriptomes across the complete <i>Plasmodium</i> life cycle. <i>Science</i> <b>365</b>, eaaw2619. <a href="https://doi.org/10.1126/science.aaw2619" target=_blank>https://doi.org/10.1126/science.aaw2619</a>
+	
+	<li id="khan">Khan, S.M., Kroeze, H., Franke-Fayard, B., & Janse, C.J. (2013). Standardization in generating and reporting genetically modified rodent malaria parasites: the RMgmDB database. <i>Methods in molecular biology (Clifton, N.J.)</i> <b>923</b>, 139–150. <a href="https://doi.org/10.1007/978-1-62703-026-7_9" target=_blank>https://doi.org/10.1007/978-1-62703-026-7_9</a>
+	
+	<li id="kimmel">Kimmel, J., Schmitt, M., Sinner, A. et al. (2023). Gene-by-gene screen of the unknown proteins encoded on Plasmodium falciparum chromosome 3. <i>Cell systems</i>, <b>14</b>(1), 9–23.e7. <a href="https://doi.org/10.1016/j.cels.2022.12.001" target=_blank>https://doi.org/10.1016/j.cels.2022.12.001</a></li>
+	
+	<li id="leroch">
+	Le Roch, K. G., Zhou, Y., Blair, P. L., Grainger, M., Moch, J. K., Haynes, J. D., … Winzeler, E. A. (2003). Discovery of gene function by expression profiling of the malaria parasite life cycle. <i>Science</i>, <b>301</b>(5639), 1503–1508. <a href="https://doi.org/10.1126/science.1087025" target=_blank>https://doi.org/10.1126/science.1087025</a></li>
+	
+	<li id="pf7">MalariaGEN, Abdel Hamid, M. M., Abdelraheem, M. H., Acheampong, D. O., Ahouidi, A., Ali, M., Almagro-Garcia, J., Amambua-Ngwa, A., Amaratunga, C., Amenga-Etego, L., Andagalu, B., Anderson, T., Andrianaranjaka, V., Aniebo, I., Aninagyei, E., Ansah, F., Ansah, P. O., Apinjoh, T., Arnaldo, P., Ashley, E., … van der Pluijm, R. W. (2023). Pf7: an open dataset of <i>Plasmodium falciparum</i> genome variation in 20,000 worldwide samples. <i>Wellcome open research</i> <b>8</b>, 22. <a href="https://doi.org/10.12688/wellcomeopenres.18681.1" target=_blank>https://doi.org/10.12688/wellcomeopenres.18681.1</a></li>
+	
+	<li id="teufel">Teufel, F., Almagro Armenteros, J.J., Johansen, A.R. et al. (2022). SignalP 6.0 predicts all five types of signal peptides using protein language models. <i>Nat Biotechnol</i> <b>40</b>, 1023–1025. <a href="https://doi.org/10.1038/s41587-021-01156-3" target=_blank>https://doi.org/10.1038/s41587-021-01156-3</a></li>
+	<p>For more information about SignalP, see this <a href="https://communities.springernature.com/posts/signalp-6-0-predicts-all-five-types-of-signal-peptides-using-protein-language-models" target=_blank>Springer Nature blog post</a></p>
+	
+	<li id="schwach">Schwach, F., Bushell, E., Gomes, A.R., Anar, B., Girling, G., Herd, C., Rayner, & J.C., Billker, O. (2015). <i>Plasmo</i>GEM, a database supporting a community resource for large-scale experimental genetics in malaria parasites. <i>Nucleic Acids Research</i> <b>43</b>(D1), D1176–D1182. <a href="https://doi.org/10.1093/nar/gku1143" target=_blank>https://doi.org/10.1093/nar/gku1143</a></li>
+	
+	<li id="szklarczyk">Szklarczyk, D., Kirsch, R., Koutrouli, M., Nastou, K., Mehryary, F., Hachilif, R., Gable, A. L., Fang, T., Doncheva, N. T., Pyysalo, S., Bork, P., Jensen, L. J., & von Mering, C. (2023). The STRING database in 2023: protein-protein association networks and functional enrichment analyses for any sequenced genome of interest. <i>Nucleic acids research</i>, <b>51</b>(D1), D638–D646. <a href="https://doi.org/10.1093/nar/gkac1000" target=_blank>https://doi.org/10.1093/nar/gkac1000</a></li>
+	
+	<li id="zhang-piggybac">Zhang, M. et al. (2018). Uncovering the essential genes of the human malaria parasite Plasmodium falciparum by saturation mutagenesis. <i>Science</i> <b>360</b>, eaap7847. <a href="https://doi.org/10.1126/science.aap7847" target=_blank>https://doi.org/10.1126/science.aap7847</a></li>
+	
+	<li id="zhang-TM-align">Zhang, Y., & Skolnick, J. (2005). TM-align: a protein structure alignment algorithm based on the TM-score. <i>Nucleic acids research</i>, <b>33</b>(7), 2302–2309. <a href="https://doi.org/10.1093/nar/gki524" target=_blank>https://doi.org/10.1093/nar/gki524</a></li>
+	
+</ol>

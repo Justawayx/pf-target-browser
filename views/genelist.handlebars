@@ -1,0 +1,21 @@
+<h1>Gene List</h1>
+<div class="table-wrapper">
+	<table>
+		<thead>
+			<tr>
+				<th>Gene ID</th>
+				<th>Gene Symbol</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each data}}
+				<tr>
+					{{#each this}}
+						<td>{{{this}}}</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>
