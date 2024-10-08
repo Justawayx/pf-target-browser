@@ -34,7 +34,7 @@ const credentials = {key: privateKey, cert: certificate};
 
 // Start app
 const app = express()
-// const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 const http_port = 80 // 3000
 const https_port = 443 // 3000
