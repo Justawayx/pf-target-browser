@@ -382,9 +382,9 @@ app.get('/about', (req, res) => {
 // Gene list (serve static page for efficiency)
 app.get('/genelist', (req, res) => {
 	
-	if (req.query.col) {
+	if (req.query) {
 		
-		var desired_cols = (typeof req.query.col === 'string') ? [req.query.col] : req.query.col
+		var desired_cols = (req.query.col) ? ((typeof req.query.col === 'string') ? [req.query.col] : req.query.col) : ['GeneID', 'GeneSymbol', 'ProductDescription']
 		desired_cols = sanitize_requested_columns(desired_cols)
 		var sort_col = (req.query.sort) ? req.query.sort : 'GeneID'
 		var sort_order = (req.query.order) ? req.query.order : 'ASC'
