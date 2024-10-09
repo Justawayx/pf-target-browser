@@ -2,10 +2,14 @@
 <p>This web app, created by the <b><a href="https://winzeler.ucsd.edu/" target=_blank>Winzeler Lab</a></b>, was designed to be a resource for <b><a href="https://www.malariada.org/" target=_blank>MalDA (Malaria Drug Accelerator) Consortium</a></b>'s <i>Plasmodium falciparum</i> target prioritization efforts. We have compiled a variety of annotations for all genes in the <i>P. falciparum</i> 3D7 genome (PlasmoDB release 66) relevant to their potential as antimalarial targets.</p>
 <p>To navigate this app, you can:</p>
 <ul>
-	<li>Enter a keyword into the search bar, which will show matches to protein-coding genes based on Pf3D7 gene ID, gene symbol, and product description. If there is exactly one match, it will redirect to the corresponding gene page (e.g. <a href="./search?q=cytb" target=_blank>cytb</a>)</li>
+	<li>Enter a keyword into the search bar, which will show matches to protein-coding genes based on Pf3D7 gene ID, gene symbol, and product description. If there is exactly one match, it will redirect to the corresponding gene page (e.g. <a href="./search?q=mdr1" target=_blank>mdr1</a>)</li>
 	<li>Enter the Pf3D7 ID of the gene of interest (e.g. <a href="./PF3D7_0417200" target=_blank>PF3D7_0417200</a>) at the end of the URL</li>
 	<li>Visit the <b><a href="./genelist" target=_blank>Gene List</a></b> tab for a full list of protein-coding genes</li>
+	<ul>
+		<li>There, you can view up to 6 additional gene annotation columns and sort by a specific column</li>
+	</ul>
 </ul>
+<p>All data displayed in this website can be downloaded in tabular format from <a href="https://figshare.com/articles/dataset/Pf3D7_gene_annotation_tables/27190545" target=_blank>this Figshare link</a>.</p>
 
 <h2>Methods</h2>
 
@@ -27,7 +31,7 @@
 <p>To provide additional data on biological function, we include the following:</p>
 <ul>
 	<li>
-		Summary of gene expression across sporozoite, ring, trophozoite, schizont and gametocyte stages based on the <b>Le Roch et al.</b> oligonucleotide array dataset [<a href="#leroch">ref</a>] <b>Malaria Cell Atlas</b> Chromium 10x single cell RNA-seq dataset [<a href="#howick">ref</a>]. RNA-seq expression data was taken directly from <b>pf-ch10x-exp.csv</b> in <b><a href="https://www.malariacellatlas.org/downloads/pf.zip">pf.zip</a></b> downloaded from the <a href="https://www.malariacellatlas.org/atlas/plasmodium-falciparum-atlas" target=_blank>Malaria Cell Atlas website</a> in February 2024.
+		Summary of gene expression across sporozoite, ring, trophozoite, schizont and gametocyte stages based on the <b>Le Roch et al.</b> oligonucleotide array dataset [<a href="#leroch">ref</a>] and <b>Malaria Cell Atlas</b> Chromium 10x single cell RNA-seq dataset [<a href="#howick">ref</a>]. RNA-seq expression data was taken directly from <b>pf-ch10x-exp.csv</b> in <b><a href="https://www.malariacellatlas.org/downloads/pf.zip">pf.zip</a></b> downloaded from the <a href="https://www.malariacellatlas.org/atlas/plasmodium-falciparum-atlas" target=_blank>Malaria Cell Atlas website</a> in February 2024.
 		<ul>
 			<li>For the Le Roch et al. microarray dataset, which reports expression and logP (likelihood of gene absence calculated using the MOID algorithm) values for 9 substages synchronized using two different methods (sorbitol or thermocycling), genes were labelled "expressed" in a particular stage if at least one substage with either synchronization method had expression ≥ 30 and logP ≤ -1, "not expressed" if no substage had expression ≥ 10 and logP ≤ -0.5, and otherwise "possibly expressed."</li>
 			<li>For the Malaria Cell Atlas scRNA-seq dataset, mean normalized expression across cells and proportion of cells with expression value of 0 for the gene are reported. There are a total of 37,624 cells with the following distribution of cells per stage:</li>
@@ -95,7 +99,7 @@
 <p>Existence of a highly similar human ortholog poses cytotoxicity concerns for a candidate target. <i>Homo sapiens</i> genes orthologous to Pf3D7 genes were determined from OrthoMCL, and both sequence and structural similarity were evaluated through pairwise comparison of Pf3D7 and human ortholog AlphaFold(v4) structures in <b>TM-align</b> [<a href="#zhang-TM-align">ref</a>]. Of 2,006 genes with human ortholog(s), 1,972 had AlphaFold structures enabling TM-align comparison.</p>
 
 <h3>Resistome Mutations</h3>
-<p>In vitro selections with antimalarial compounds yield mutations that may play roles in resistance. We have compiled a <i>Pf</i> "resistome" database consisting of all SNV and indel mutations identified from whole genome sequencing of 1,138 <i>Pf</i> clones or bulk culture samples with evolved resistance to one of 146 diverse compounds. Here, we report data on the following classes of mutations in the resistome database:</p>
+<p>In vitro selections with antimalarial compounds yield mutations that may play roles in resistance. We have compiled a <i>Pf</i> "resistome" database consisting of all SNV and indel mutations identified from whole genome sequencing of 651 <i>Pf</i> clones or bulk culture samples with evolved resistance to one of 109 diverse compounds. Here, we report data on the following classes of mutations in the resistome database:</p>
 <ul>
 	<li><b>"Disruptive" mutations:</b> any SNV or indel occurring within a gene that is not a synonymous, intron, or stop retained variant (e.g. inframe indels, frameshift, start lost, splice region, nonsense, missense)</li>
 	<li><b>Missense mutations:</b> missense SNVs</li>
@@ -104,7 +108,8 @@
 <p>To determine variants, WGS reads were aligned to the Pf3D7 v13 genome and processed according to GATK 3.5 pipeline. GATK HaplotypeCaller with default parameters was used to generate SNV/indel variant calls, and SnpEff was used to annotate genes and variant effects. Initial filtering retained SNVs and indels with total depth ≥2 and alternate allele frequency (AAF) >0.2 in a resistant sample along with depth ≥3 and genotype call of 0/0 in its parent sample. Next, these variants were filtered for SnpEff gene annotation (excludes intergenic variants >1000nt away from nearest gene) and either major alt allele depth >40 and major AAF >0.4, or major alt allele depth >10 and AAF >0.8.</p>
 
 <h3>Protein Information</h3>
-<p>All records from <b>Protein Data Bank</b> (PDB) associated with a <i>Pf</i> gene ID were downloaded in February 2024. <b style="color:red">NOTE: PDB ID(s) are based on exact gene ID match. To thoroughly check whether a protein has a crystal structure in PDB, search PDB using other keywords.</b></p>
+<p>All records from <b>Protein Data Bank</b> (PDB) associated with a <i>Pf</i> gene ID were obtained by querying Pf3D7 gene symbols and UniProt IDs, or by searching "<i>Plasmodium</i>" in the <a href="https://www.rcsb.org/" target=_blank>PDB website</a> in February 2024.</p>
+
 <p>We include visualization of the AlphaFold protein structure, if available, in an embedded version of <b><a href="https://www.ncbi.nlm.nih.gov/Structure/icn3d" target=_blank>iCn3D</a></b>, a web-based 3D structure viewer from the NIH.</p>
 
 <h3>Field Variants</h3>
@@ -113,12 +118,6 @@
 
 <h3>Associated Publications</h3>
 <p>A download from the NCBI FTP site was performed for gene2pubmed.gz (version 2024-02-21) containing tax ID, gene ID (Entrez) and PubMed ID. Gene IDs were mapped to this annotation set and corresponding PMIDs were extracted. To include gene references not related to an Entrez ID, but to the gene name (symbol), PMID details were obtained pragmatically using NCBI Eutils4 efetch function from NCBI. Title, authors and DOI identifier were retrived for each record.</p>
-
-<h2>More Resources</h2>
-<ul>
-	<li>Essentiality and localization for "conserved protein, unknown function" genes on Pf3D7 chromosome 3: <a href="https://ars.els-cdn.com/content/image/1-s2.0-S2405471222004690-mmc2.xlsx" target=_blank>TABLE</a> (Kimmel et al. 2023 [<a href="#kimmel">ref</a>])</li>
-	<li>Structural similarities to known domains found in 353 Pf3D7 proteins of unknown function, using Alphafold predictions and DALI search against PDB: <a href="https://www.biorxiv.org/content/10.1101/2023.06.05.543710v2.supplementary-material" target=_blank>TABLES</a> (Behrens and Spielmann 2024 [<a href="#behrens">ref</a>])</li>
-</ul>
 
 <h2>Number Formatting</h2>
 <p>To facilitate interpretation, certain numeric data are colored to reflect their value. Colors should not be construed as indications of whether a gene is suitable or not as an antimalarial drug target. Details are listed below.</p>
@@ -137,6 +136,12 @@
 	<li>Protein Information - Protein Length: linear scale from red to green based on percent rank among all Pf3D7 genes</li>
 	<li>Protein Information - Molecular Weight: linear scale from red to green based on percent rank among all Pf3D7 genes</li>
 	<li>Protein Information - Isoelectric Point: linear scale from red to green based on percent rank among all Pf3D7 genes</li>
+</ul>
+
+<h2>More Resources</h2>
+<ul>
+	<li>Essentiality and localization for "conserved protein, unknown function" genes on Pf3D7 chromosome 3: <a href="https://ars.els-cdn.com/content/image/1-s2.0-S2405471222004690-mmc2.xlsx" target=_blank>TABLE</a> (Kimmel et al. 2023 [<a href="#kimmel">ref</a>])</li>
+	<li>Structural similarities to known domains found in 353 Pf3D7 proteins of unknown function, using Alphafold predictions and DALI search against PDB: <a href="https://www.biorxiv.org/content/10.1101/2023.06.05.543710v2.supplementary-material" target=_blank>TABLES</a> (Behrens and Spielmann 2024 [<a href="#behrens">ref</a>])</li>
 </ul>
 
 <h2>References</h2>

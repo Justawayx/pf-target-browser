@@ -37,11 +37,15 @@ html {
 th {
 	background: lightgray;
 	font-size: 14px;
+	word-wrap: break-word;
+	max-width: 300px;
 }
 
 td {
   font-size: 14px;
 	padding: 2px;
+	word-wrap: break-word;
+	max-width: 300px;
 }
 
 li {
@@ -117,6 +121,40 @@ em {
 	width: 100%;
   margin: 0;
   font-size: 16px;
+}
+
+li:target {
+	background: lightyellow;
+	padding-top: 40px;
+}
+
+form {
+	margin-bottom: 20px;
+}
+
+.table-form {
+	display: table;
+	border-spacing: 10px;
+}
+
+.table-form-div {
+	display: table-cell;
+}
+
+.submit-button{
+  display:block;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+@media screen and (max-width: 920px) {
+  .table-form {
+		display: unset;
+	}
+
+	.table-form-div {
+		display: unset;
+	}
 }
 
 @media screen and (max-width: 600px) {

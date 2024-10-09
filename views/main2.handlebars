@@ -430,13 +430,14 @@
 <h2>Associated Publications</h2>
 {{#if data.pmidTableData}}
 <div class="table-wrapper">
+	<div class="table-scroll" style="height:400px">
 	<table>
 		<tbody>
 			<tr>
 				<th>PMID</th>
 				<th>Title</th>
 				<th>Authors</th>
-				<th>DOI</th>
+				<th>DOI/Link</th>
 			</tr>
 			{{#each data.pmidTableData}}
 				<tr>
@@ -447,6 +448,7 @@
 			{{/each}}
 		</tbody>
 	</table>
+	</div>
 </div>
 {{else}}
 <p><i>No associated publications</i></p>

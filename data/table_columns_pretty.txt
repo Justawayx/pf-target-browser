@@ -1,0 +1,117 @@
+Gene ID
+# Exons in Gene
+# Transcripts
+Annotated 3' UTR Length
+Annotated 5' UTR Length
+Gene Strand
+Gene Type
+Is Pseudo
+Gene Symbol
+Product Description
+Entrez Gene ID
+Uniprot IDs
+Genomic Length
+Chromosome
+Genomic Location
+Ortholog Count
+Ortholog Group
+Paralog Count
+Zhang MIS
+Zhang MFS
+Zhang Phenotype
+PlasmoDB Noncoding SNPs
+PlasmoDB Nonsynonymous SNPs
+PlasmoDB Synonymous SNPs
+PlasmoDB Stop Codon SNPs
+PlasmoDB Total SNPs
+Protein Length
+CDS Length
+Molecular Weight
+Isoelectric Point
+Interpro ID
+Interpro Description
+PFam ID
+PFam Description
+Superfamily ID
+Superfamily Description
+Num TM Domains
+SignalP Peptide
+Computed GO Component IDs
+Computed GO Components
+Computed GO Function IDs
+Computed GO Functions
+Computed GO Process IDs
+Computed GO Processes
+Curated GO Component IDs
+Curated GO Components
+Curated GO Function IDs
+Curated GO Functions
+Curated GO Process IDs
+Curated GO Processes
+EC Numbers
+EC Numbers from OrthoMCL
+PlasmoGEM Pb Ortholog
+PlasmoGEM Phenotype
+PlasmoGEM Relative Growth Rate
+PlasmoGEM Confidence
+RMgmDB Pb Ortholog
+RMgmDB Gene Modification
+RMgmDB ID
+RMgmDB Link
+RMgmDB ABS Different from WT
+Resistome Pf3D7v3 Gene ID
+Resistome # Samples with Interesting Missense Mutations
+Resistome Compounds of Samples with Interesting Missense Mutations
+Resistome Missense Mutations
+Resistome # Samples with Missense Mutations
+Resistome Compounds of Samples with Missense Mutations
+Resistome # Samples with Disruptive Mutations
+Resistome Interesting Missense Mutations
+AlphaFill Pf Uniprot
+AlphaFill Hit PDB ID
+AlphaFill Hit Global RMSD
+AlphaFill Hit Transplant ID
+AlphaFill Hit Transplant Name
+AlphaFill Hit Transplant Local RMSD
+AlphaFill All Hits Transplants
+BindingDB Match Any Exact
+BindingDB Match Any Exact Sources
+BindingDB Match OrthoMCL BLAST
+BindingDB Match OrthoMCL BLAST Best Evalue
+Hs Gene IDs
+Hs Gene Descriptions
+Hs Most Similar Uniprot ID
+Hs TMalign Length
+Hs TMalign RMSD
+Hs TMalign Seq Identity
+Hs TMalign Score
+Miles Genome Classification
+Updated Genome Classification
+BindingDB Match HOGENOM
+BindingDB Match OMA
+BindingDB Match OrthoDB
+BindingDB Match OrthoMCL
+Zhang Original MIS
+Zhang Original MFS
+Zhang Num Insertions in CDS
+Zhang Note
+PDB IDs
+Pf7 Number Variants by Effect x Homozygous Prevalence JSON
+Pf7 Number Variants by Effect x Any Prevalence JSON
+Stanway Pb Ortholog with Greatest Magnitude SG_B2 logFC
+Stanway Greatest Magnitude SG_B2 logFC
+Stanway SG_B2 Phenotype
+LeRoch Sporozoite Expression Class
+LeRoch Ring Expression Class
+LeRoch Trophozoite Expression Class
+LeRoch Schizont Expression Class
+LeRoch Gametocyte Expression Class
+MalariaCellAtlas Ring Mean Expression
+MalariaCellAtlas Trophozoite Mean Expression
+MalariaCellAtlas Schizont Mean Expression
+MalariaCellAtlas Gametocyte Mean Expression
+MalariaCellAtlas Ring Expression Proportion Zero
+MalariaCellAtlas Trophozoite Expression Proportion Zero
+MalariaCellAtlas Schizont Expression Proportion Zero
+MalariaCellAtlas Gametocyte Expression Proportion Zero
+Updated GO Terms

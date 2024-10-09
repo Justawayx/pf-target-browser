@@ -16,6 +16,10 @@ const Hs_TMalign_RMSDs = JSON.parse(fs.readFileSync('data/Hs_TMalign_RMSDs.json'
 const MolecularWeights = JSON.parse(fs.readFileSync('data/MolecularWeights.json', 'utf8'))
 const ProteinLengths = JSON.parse(fs.readFileSync('data/ProteinLengths.json', 'utf8'))
 const IsoelectricPoints = JSON.parse(fs.readFileSync('data/IsoelectricPoints.json', 'utf8'))
+const TableColumns = fs.readFileSync('data/table_columns.txt', 'utf8').split('\r\n')
+const TableColumnsPretty = fs.readFileSync('data/table_columns_pretty.txt', 'utf8').split('\n')
+
+const TableColumn_to_pretty = Object.assign(...TableColumns.map((col, i) => ({ [col]: TableColumnsPretty[i] })));
 
 const ResistomeNumSampleswithInterestingMissenseMutations_list = JSON.parse(fs.readFileSync('data/ResistomeNumSampleswithInterestingMissenseMutations.json', 'utf8'))
 const ResistomeNumSampleswithMissenseMutations_list = JSON.parse(fs.readFileSync('data/ResistomeNumSampleswithMissenseMutations.json', 'utf8'))
@@ -28,16 +32,16 @@ const PlasmoDBNonsynonymousSNPs_list = JSON.parse(fs.readFileSync('data/PlasmoDB
 const PlasmoDBStopCodonSNPs_list = JSON.parse(fs.readFileSync('data/PlasmoDBStopCodonSNPs.json', 'utf8'))
 
 // SSL
-const privateKey  = fs.readFileSync('/root/certs/selfsigned.key', 'utf8');
-const certificate = fs.readFileSync('/root/certs/selfsigned.crt', 'utf8');
-const credentials = {key: privateKey, cert: certificate};
+// const privateKey  = fs.readFileSync('/root/certs/selfsigned.key', 'utf8');
+// const certificate = fs.readFileSync('/root/certs/selfsigned.crt', 'utf8');
+// const credentials = {key: privateKey, cert: certificate};
 
 // Start app
 const app = express()
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-const http_port = 80 // 3000
-const https_port = 443 // 3000
+// const httpsServer = https.createServer(credentials, app);
+const http_port = 3000 // 80
+const https_port = 3000 // 443
 
 // Set up Handlebars
 app.set('view engine', 'handlebars')
@@ -353,6 +357,18 @@ var RMgmDB_phenotype_color_dict = {
 	null: null,
 }
 
+function sanitize_requested_columns(desired_cols) {
+	let sanitized_cols = []
+	for (let i = 0; i < desired_cols.length; i++) {
+		if (desired_cols[i] == 'GeneID') continue;
+		else if (TableColumns.includes(desired_cols[i])) {
+			sanitized_cols.push(desired_cols[i]);
+		}
+		if (sanitized_cols.length == 6) break;
+	}
+	return sanitized_cols;
+}
+
 // Home
 app.get('/', (req, res) => {
 	res.redirect('/about');
@@ -365,7 +381,34 @@ app.get('/about', (req, res) => {
 
 // Gene list (serve static page for efficiency)
 app.get('/genelist', (req, res) => {
-	res.sendfile('public/genelist.html');
+	
+	if (req.query.col) {
+		
+		var desired_cols = (typeof req.query.col === 'string') ? [req.query.col] : req.query.col
+		desired_cols = sanitize_requested_columns(desired_cols)
+		var sort_col = (req.query.sort) ? req.query.sort : 'GeneID'
+		var sort_order = (req.query.order) ? req.query.order : 'ASC'
+		
+		console.log(req.query)
+		var cols_sql_formatted = desired_cols.map(col  => `"${col}"`).join(', ')
+		console.log(`SELECT GeneID, ${cols_sql_formatted} FROM anno ORDER BY "${sort_col}" ${sort_order}`)
+		
+		var cols_to_display = (['GeneID'].concat(desired_cols)).map(col => TableColumn_to_pretty[col])
+		
+		db.all(`SELECT GeneID, ${cols_sql_formatted} FROM anno ORDER BY ${sort_col} ${sort_order}`, (err, rows) => {
+			if (err) { 
+				res.status(500).json({ error: err.message });
+				return; 
+			}
+			var tups = [];
+			for (let i = 0; i < rows.length; i++) {
+				tups.push([`<a href="./${rows[i].GeneID}" target=_blank>${rows[i].GeneID}</a>`].concat(desired_cols.map(col => rows[i][col])));
+			}
+			res.render('genelist', {layout: 'general_layout', data: {'rows': tups, 'cols': cols_to_display, 'allcols': TableColumns}});
+		})
+	} else { // Default page
+		res.sendfile('public/genelist.html');
+	}
 })
 
 // Search
@@ -442,7 +485,7 @@ app.get('/PF3D7*', (req, res) => {
 			var pmidTableData = []
 			for (let i = 0; i < pmid_rows.length; i++) {
 				pmid_row = pmid_rows[i]
-				doiElement = ((!pmid_row.DOI) || (!pmid_row.DOI.includes('/'))) ? '' : `<a href="https://doi.org/${pmid_row.DOI}" target=_blank>${pmid_row.DOI}</a>`
+				doiElement = (pmid_row.DOI.includes('pubmed')) ? `<a href="${pmid_row.DOI}" target=_blank>${pmid_row.DOI}</a>` : `<a href="https://doi.org/${pmid_row.DOI}" target=_blank>${pmid_row.DOI}</a>`
 				authors = (!pmid_row.Authors) ? [] : pmid_row.Authors.split(',')
 				authorElement = (authors.length > 4) ? [authors[0], authors[1], '...', authors[authors.length-1]].join(', ') : authors.join(', ')				
 				pmidTableData.push([pmid_row.PMID, pmid_row.Title, authorElement, doiElement])
@@ -536,7 +579,5 @@ app.get('/PF3D7*', (req, res) => {
 		})
 })
 
-//httpServer.listen(http_port);
-//httpsServer.listen(https_port);
-httpServer.listen(80);
-httpsServer.listen(443);
+httpServer.listen(http_port);
+// httpsServer.listen(https_port);

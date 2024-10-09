@@ -1,15 +1,43 @@
 <h1>Gene List</h1>
-<div class="table-wrapper">
+
+<form class="table-form">
+	<div class="table-form-div">
+		<h3>Select columns to display (maximum 6)</h3>
+		<select name="col" multiple style="height:120px">
+			{{#each data.allcols}}
+			<option value="{{this}}">{{this}}</option>
+			{{/each}}
+		</select>
+	</div>
+
+	<div class="table-form-div">
+		<h3>Select column to sort by</h3>
+		<select name="sort">
+			{{#each data.allcols}}
+			<option value="{{this}}">{{this}}</option>
+			{{/each}}
+		</select>
+		<div style="margin-top:10px">
+			<input type="radio" id="asc" name="order" value="ASC" checked />
+			<label for="asc">Ascending</label>
+			<input type="radio" id="desc" name="order" value="DESC" />
+			<label for="desc">Descending</label>
+		</div>
+		<input class="submit-button" type="submit">
+	</div>
+</form>
+
+<div class="table-wrapper" style="overflow:scroll">
 	<table>
 		<thead>
 			<tr>
-				<th>Gene ID</th>
-				<th>Gene Symbol</th>
-				<th>Description</th>
+				{{#each data.cols}}
+				<th>{{this}}</th>
+				{{/each}}
 			</tr>
 		</thead>
 		<tbody>
-			{{#each data}}
+			{{#each data.rows}}
 				<tr>
 					{{#each this}}
 						<td>{{{this}}}</td>
